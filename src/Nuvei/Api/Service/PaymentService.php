@@ -170,6 +170,51 @@ class PaymentService extends BaseService
         return $this->requestJson($params, 'openOrder.do');
     }
 
+     /**
+     * @param array $params
+     *
+     * @return mixed
+     * @throws \Nuvei\Api\Exception\ConnectionException
+     * @throws \Nuvei\Api\Exception\ResponseException
+     * @throws \Nuvei\Api\Exception\ValidationException
+     * @link https://docs.nuvei.com/api/main/indexMain_v1_0.html?json#openOrder
+     */
+    public function updateOrder(array $params)
+    {
+        $mandatoryFields = [
+            'merchantId',
+            'merchantSiteId',
+            'clientUniqueId',
+            'timeStamp',
+            'checksum',
+            'currency',
+            'amount',
+            'sessionToken'
+        ];
+
+        $checksumParametersOrder = [
+            'merchantId',
+            'merchantSiteId',
+            'clientRequestId',
+            'amount',
+            'currency',
+            'timeStamp',
+            'merchantSecretKey'
+        ];
+ 
+        $params = $this->appendMerchantIdMerchantSiteIdTimeStamp($params);
+        $params = $this->appendIpAddress($params);
+
+        $params['checksum'] = Utils::calculateChecksum($params, $checksumParametersOrder, $this->client->getConfig()->getMerchantSecretKey(), $this->client->getConfig()->getHashAlgorithm());
+        if(!isset($params['sessionToken'])) {
+            $params['sessionToken'] = $this->getSessionToken();
+        }
+
+        $this->validate($params, $mandatoryFields);
+
+        return $this->requestJson($params, 'updateOrder.do');
+    }
+    
     /**
      * @param array $params
      *

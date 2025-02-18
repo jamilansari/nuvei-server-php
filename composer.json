@@ -1,11 +1,11 @@
 {
-  "name": "nuvei/nuvei-server-php",
+  "name": "jamilansari/nuvei-server-php",
   "type": "library",
   "description": "A PHP client library for accessing Nuvei API",
   "keywords": [
     "nuvei"
   ],
-  "homepage": "https://github.com/Nuvei/nuvei-server-php",
+  "homepage": "https://github.com/jamilansari/nuvei-server-php",
   "license": "MIT",
   "require": {
     "php": ">=5.4",
