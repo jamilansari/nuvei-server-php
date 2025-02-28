@@ -184,6 +184,7 @@ class PaymentService extends BaseService
         $mandatoryFields = [
             'merchantId',
             'merchantSiteId',
+            'orderId',
             'clientUniqueId',
             'timeStamp',
             'checksum',
